@@ -1,0 +1,722 @@
+\documentclass[11pt, letterpaper]{amsart}
+\usepackage[left=1in,right=1in,bottom=1in,top=1in]{geometry}
+\usepackage{amsfonts}
+\usepackage{amsmath, amssymb}
+\usepackage{graphicx}
+\usepackage[font=small,labelfont=bf]{caption}
+\usepackage{epstopdf}
+\usepackage[usenames,dvipsnames]{xcolor}
+\usepackage[pdfpagelabels,hyperindex,colorlinks=true,linkcolor=blue,urlcolor=magenta,citecolor=green]{hyperref}
+\usepackage{amsthm}
+\usepackage{float}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{longtable}
+\usepackage{mathrsfs}
+
+\hypersetup{
+pdftitle={Another Power Identity involving Binomial Theorem and Faulhaber's formula},
+pdfsubject={Mathematics, Number Theory, Combinatorics},
+pdfauthor={Petro Kolosov},
+pdfkeywords={Faulhaber's formula, Faulhaber's theorem, Binomial Theorem, Binomial coefficient, Binomial distribution,
+Binomial identities, Power Sums, Finite differences}
+}
+
+\newcommand{\overbar}[1]{\mkern 1.5mu\overline{\mkern-1.5mu#1\mkern-1.5mu}\mkern 1.5mu}
+\DeclareRobustCommand{\stirling}{\genfrac\{\}{0pt}{}}
+\newcommand{\urlNewWindow}[1]{\href[pdfnewwindow=true]{#1}{\nolinkurl{#1}}}
+\newcommand\ddfrac[2]{\frac{\displaystyle #1}{\displaystyle #2}}
+\newtheorem{thm}{Theorem}[section]
+\newtheorem{cor}[thm]{Corollary}
+\newtheorem{prop}[thm]{Proposition}
+\newtheorem{lem}[thm]{Lemma}
+\newtheorem{conj}[thm]{Conjecture}
+\newtheorem{quest}[thm]{Question}
+\newtheorem{ppty}[thm]{Property}
+\newtheorem{ppties}[thm]{Properties}
+\newtheorem{claim}[thm]{Claim}
+
+\theoremstyle{definition}
+\newtheorem{defn}[thm]{Definition}
+\newtheorem{defns}[thm]{Definitions}
+\newtheorem{con}[thm]{Construction}
+\newtheorem{exmp}[thm]{Example}
+\newtheorem{exmps}[thm]{Examples}
+\newtheorem{notn}[thm]{Notation}
+\newtheorem{notns}[thm]{Notations}
+\newtheorem{addm}[thm]{Addendum}
+\newtheorem{exer}[thm]{Exercise}
+\newtheorem{limit}[thm]{Limitation}
+
+\theoremstyle{remark}
+\newtheorem{rem}[thm]{Remark}
+\newtheorem{rems}[thm]{Remarks}
+\newtheorem{warn}[thm]{Warning}
+\newtheorem{sch}[thm]{Scholium}
+
+\definecolor{energy}{RGB}{114,0,172}
+\definecolor{freq}{RGB}{45,177,93}
+\definecolor{spin}{RGB}{251,0,29}
+\definecolor{signal}{RGB}{203,23,206}
+\definecolor{circle}{RGB}{217,86,16}
+\definecolor{average}{RGB}{203,23,206}
+\newcommand{\K}{\operatornamewithlimits{K}}
+\colorlet{shadecolor}{gray!20}
+\pgfplotsset{compat=1.9}
+\def\N{10}
+\def\M{4}
+\usepgflibrary{fpu}
+
+
+\makeatletter
+\let\c@equation\c@thm
+\raggedbottom
+\makeatother
+\numberwithin{equation}{section}
+%--------Meta Data: Fill in your info------
+%&#1043;&#1086;&#1089;&#1087;&#1086;&#1076;&#1080;, &#1048;&#1080;&#1089;&#1091;&#1089;&#1077; &#1061;&#1088;&#1080;&#1089;&#1090;&#1077;, &#1057;&#1099;&#1085;&#1077; &#1041;&#1086;&#1078;&#1080;&#1081;, &#1084;&#1086;&#1083;&#1080;&#1090;&#1074;&#1072;&#1084;&#1080; &#1055;&#1088;&#1077;&#1095;&#1080;&#1089;&#1090;&#1099;&#1103; &#1058;&#1074;&#1086;&#1077;&#1103; &#1052;&#1072;&#1090;&#1077;&#1088;&#1080; &#1080; &#1042;&#1089;&#1077;&#1093; &#1057;&#1074;&#1103;&#1090;&#1099;&#1093; &#1058;&#1074;&#1086;&#1080;&#1093;, &#1087;&#1086;&#1084;&#1080;&#1083;&#1091;&#1081; &#1085;&#1072;&#1089;. &#1040;&#1084;&#1080;&#1085;&#1100;.
+\author[Petro Kolosov]{Petro Kolosov}
+\email{kolosovp94@gmail.com}
+\keywords{Faulhaber's formula, Faulhaber's theorem, Binomial Theorem, Binomial coefficient, Binomial distribution,
+Binomial identities, Power Sums, Finite differences}
+\urladdr{https://kolosovpetro.github.io}
+\subjclass[2010]{11C08 (primary), 41A10 (secondary)}
+\title{Another Power Identity involving Binomial Theorem and Faulhaber's formula}
+\begin{document}
+\begin{abstract}
+In this paper, by means of Binomial theorem and Faulhaber's formula we derive and prove the following identity
+between odd power and $m$-order polynomials
+$$T\strut^{2s+1}=\sum_{r=0}^{s}\sum_{\kappa=1}^{2s-r+1} (-1)\strut^{2s-r} \mathscr{L}_{s,r}(\kappa) \cdot T\strut^{\kappa+r}.$$
+\end{abstract}
+\maketitle
+\tableofcontents
+\section{Introduction and Main results}\label{intro}
+Define the $m$-order polynomials $P_m(\ell,T)$ in $T$
+\begin{equation}\label{f1}
+P_m(\ell,T) := \sum_{k=1}^{\ell}\sum_{j=0}^m A_{m,j}k\strut^j(T-k)\strut^j=\sum_{k=0}^{m}(-1)\strut^{m-k}U_m(\ell, k)\cdot T\strut^k,
+\end{equation}
+where $\ell\in\mathbb{N}, \ m\in\mathbb{N}$, $T\in\mathbb{R}$ and $U_m(\ell, k), \ A_{m,j}$ are coefficients defined as follows
+\begin{defn}\label{gen_13}
+\textit{(Definition of $A_{m,j}$ coefficients.)}
+\begin{equation*}
+A_{m,j}:=
+\begin{cases}
+0, & \mathrm{if } \ j<0 \ \mathrm{or } \ j>m, \\
+(2j+1)\binom{2j}{j} \sum_{d=2j+1}^{m} A_{m,d} \binom{d}{2j+1} \frac{(-1)\strut^{d-1}}{d-j} B_{2d-2j}, & \mathrm{if } \ 0 \leq j < m, \\
+(2j+1)\binom{2j}{j}, & \mathrm{if } \ j=m. \\
+\end{cases}
+\end{equation*}
+\end{defn}
+
+\begin{defn}
+\textit{(Definition of $U_m(\ell, k)$ coefficients.)}
+\begin{equation*}
+U_m(\ell, k) := (-1)\strut^m \sum_{k=a}^{\ell}\sum_{j=t}^m (-1)\strut^j\binom{j}{t}A_{m,j}k\strut^{2j-t}.
+\end{equation*}
+\end{defn}
+From this formula it may be not immediately clear why $U_m(\ell,t)$ represent polynomials in $\ell$. However, this can be seen if we change the summation order again and use Faulhaber's formula to obtain:
+\begin{equation}\label{maxal1}
+U_m(\ell,t) = (-1)^m \sum_{j=t}^m \binom{j}{t}A_{m,j} \frac{(-1)^j}{2j-t+1}\sum_{l=0}^{2j-t} \binom{2j-t+1}{l}B_{l}\ell^{2j-t+1-l}.
+\end{equation}
+Introducing $\kappa=2j-t+1-l$ to (\hyperref[maxal1]{2.31}) we further get the formula:
+\begin{equation}
+U_m(\ell,t) = (-1)^m \sum_{\kappa=1}^{2m-t+1} \ell^\kappa \sum_{j=t}^m \binom{j}{t}A_{m,j} \frac{(-1)^j}{2j-t+1}\binom{2j-t+1}{\kappa}B_{2j-t+1-\kappa},
+\end{equation}
+which allows easily compute the coefficient of $\ell^{\kappa}$ in $U_m(\ell,t)$ for each $\kappa$. In above formulae we assume that $B_1=+\frac12$. We define the coefficient for each $\ell^{\kappa}$ in $U_m(\ell,t)$ as follows
+\begin{defn} \textit{(Definition of $\mathscr{L}_{m,r}(\kappa)$ coefficients.)}
+\begin{equation*}
+\mathscr{L}_{m,r}(\kappa)=\sum_{j=r}^{m} \binom{j}{r}A_{m,j} \frac{(-1)^j}{2j-r+1}\binom{2j-r+1}{\kappa}B_{2j-r+1-\kappa}
+\end{equation*}
+\end{defn}
+Let's define the polynomial $\sum\nolimits_{0\leq j \leq m} A_{m,j}k\strut^j(T-k)\strut^j$ that is the part of (\hyperref[f1]{1.1}) as follows
+\begin{defn} \label{symmetry_1} \textit{(Definition of $g_m(k,T)$ polynomial.)}
+\begin{equation*}
+g_m(k,T) := \sum_{j=0}^{m} A_{m,j}k\strut^j(T-k)\strut^j.
+\end{equation*}
+\end{defn}
+\begin{ppty}\label{symmetry_2} (Symmetry of $g_m(k,T)$.)
+The values of (\hyperref[symmetry_2]{1.3}) is always being distributed symmetrically over given value of $\tfrac{T}{2}$, i.e
+\begin{equation*}
+g_m(T,k)=g_m(T,T-k).
+\end{equation*}
+\end{ppty}
+
+The partial case of (\hyperref[f1]{1.1}) for $\ell=T\in\mathbb{N}$ gives
+\begin{equation}\label{main_identity}
+\boxed
+{
+T^{2m+1}=\sum_{k=1}^{T}\sum_{j=0}^m A_{m,j}k\strut^j(T-k)\strut^j=\sum_{k=0}^{m}(-1)^{m-k}U_m(\ell, k)\cdot T\strut^k=P_m(T,T)
+}
+\end{equation}
+By rewriting the right-hand side of equation (1.9) in terms of $\mathscr{L}_{m,r}(\kappa)$ coefficients for every $s\geq 0$ we get
+\begin{equation}
+T\strut^{2s+1}=\sum_{r=0}^{s}\sum_{\kappa=1}^{2s-r+1} (-1)\strut^{2s-r} \mathscr{L}_{s,r}(\kappa) \cdot T\strut^{\kappa+r}.
+\end{equation}
+\section{Derivations and examples}
+\subsection{Example for \texorpdfstring{$m=1$}{m=1}}
+We start our discussion concerning the polynomials (\hyperref[f1]{1.1}) from the derivation of the partial case $P_m(T,T)=T^{2m+1}$ of the polynomial $P_m(\ell,T)$ for $m=1$. Consider the Faulhaber's identities \cite{1} for odd powers $n^{2m-1}, \ m\in\mathbb{N}$
+\begin{equation}\label{knuth1}
+n^{2m-1}=\begin{cases}
+n^1 = \binom{n}{1}, \ &\mathrm{if} \ m=1;\\
+n^3 = 6\binom{n+1}{3}+\binom{n}{1}, \ &\mathrm{if} \ m=2;\\
+n^5 = 120\binom{n+2}{5}+30\binom{n+1}{3}+\binom{n}{1}, \ &\mathrm{if} \ m=3;\\
+\vdots\\
+n^{2m-1} = \sum\limits_{1\leq k\leq m}(2k-1)!T(2m,2k)\binom{n+k-1}{2k-1}, \ &\mathrm{if} \ m\in\mathbb{N};
+\end{cases}
+\end{equation}
+The coefficients $(2k-1)!T(2m,2k)$ in the Faulhaber's identities (\hyperref[knuth1]{2.1}) can be calculated using following formula
+\begin{equation}\label{knuth2}
+(2k-1)!T(2n,2k)=\frac{1}{r}\sum_{j=0}^{r}(-1)^j\binom{2r}{j}(r-j)^{2n},
+\end{equation}
+where $r=n-k+1$ and $T(2n,2k)$ is central factorial number, see \cite{22}. The formula (\hyperref[knuth2]{2.2}) was derived by Peter Luschny in \cite{27}. The $r$-order forward finite difference of odd power $n^{2m-1}$ could be reached introducing the $r\geq 1$ to the lower index of binomial coefficient of (\hyperref[knuth1]{2.1}). For instance,
+\begin{equation}\label{forward_diff_identity}
+\Delta^r n^{2m-1}=
+\begin{cases}
+\Delta n^1 = \binom{n}{1-r}=\binom{n}{0}, \ &\mathrm{if} \ m=1, \ r=1;\\
+\Delta n^3 = 6\binom{n+1}{3-r}+\binom{n}{1-r}=6\binom{n+1}{2}+\binom{n}{0}, \ &\mathrm{if} \ m=2, \ r=1;\\
+\Delta n^5 = 120\binom{n+2}{5-r}+30\binom{n+1}{3-r}+\binom{n}{1-r}=120\binom{n+2}{4}+30\binom{n+1}{2}+\binom{n}{0}, \ &\mathrm{if} \ m=3, \ r=1;\\
+\vdots\\
+\Delta n^{2m-1} =\sum\limits_{1\leq k\leq m}(2k-1)!T(2m,2k)\binom{n+k-1}{2k-2}, \ &\mathrm{if} \ m\in\mathbb{N}, \ r=1;
+\end{cases}
+\end{equation}
+By the identity $\Delta f(x-1)=\nabla f(x), \ h=1$, backward differences could be reached as well,
+\begin{equation}\label{backward_diff_identity}
+\nabla^r n^{2m-1}=
+\begin{cases}
+\nabla n^1 = \binom{n-1}{1-r}                                      = \binom{n-1}{0},               \ &\mathrm{if} \ m=1, \ r=1;\\
+\nabla n^3 = 6\binom{n}{3-r}+\binom{n-1}{1-r}                      = 6\binom{n}{2}+\binom{n-1}{0}, \ &\mathrm{if} \ m=2, \ r=1;\\
+\nabla n^5 = 120\binom{n+1}{5-r}+30\binom{n}{3-r}+\binom{n-1}{1-r} = 120\binom{n+1}{4}+30\binom{n}{2}+\binom{n-1}{0}, \ &\mathrm{if} \ m=3, \ r=1;\\
+\vdots\\
+\nabla n^{2m-1} = \sum\limits_{1\leq k\leq m}(2k-1)!T(2m,2k)\binom{n+k-2}{2k-2}, \ &\mathrm{if} \ m\in\mathbb{N}, \ r=1;
+\end{cases}
+\end{equation}
+Now, let's derive the partial case $P_m(T,T)=T^{2m+1}$ of the polynomial (\hyperref[f1]{1.1}) for $m=1$ by means of Faulhaber's identities in forward and backward differences of cubes, see (\hyperref[forward_diff_identity]{2.3}), (\hyperref[backward_diff_identity]{2.4})
+\begin{equation}\label{f6}
+\begin{split}
+T^3
+=&\sum\limits_{k=0}^{T-1}\Delta T^3(k)=\sum\limits_{k=0}^{T-1}6\binom{k+1}{2}+\binom{k}{0}\\
+=&\sum\limits_{k=1}^{T}\nabla T^3(k)=\sum\limits_{k=1}^{T}6\binom{k}{2}+\binom{k-1}{0}.
+\end{split}
+\end{equation}
+Replacing the binomial coefficient $\tbinom{n}{2}$ in (\hyperref[f6]{2.5}) by the r.h.s of the identity $\tbinom{n}{2}=1+2+\cdots+(n-1)$, we get
+\begin{equation}\label{f7}
+T^3=(1+6\cdot0)+(1+6\cdot0+6\cdot1)+\cdots+(1+6\cdot0+\cdots+6\cdot(T-1))
+\end{equation}
+Note that the identity $\tbinom{n}{2}=1+2+\cdots+(n-1)$ can be generalized to the "Hockey Stick Pattern" in terms of binomial coefficients,
+\begin{equation}\label{hockey_stick}
+\binom{n}{k}=\sum_{j=k-1}^{n}\binom{j}{k-1}.
+\end{equation}
+see \urlNewWindow{https://www.cut-the-knot.org/arithmetic/combinatorics/PascalTriangleProperties.shtml}.
+Factorising the expression (\hyperref[f7]{2.6}) we get
+\begin{equation}\label{f8}
+T^3=T+(T-0)\cdot6\cdot0+(T-1)\cdot6\cdot1+\cdots+(T-(T-1))\cdot6\cdot(T-1)
+\end{equation}
+Rewrite the expression (\hyperref[f8]{2.7}) in compact form, we have
+\begin{equation}\label{cubbe}
+T^3=T+\sum\limits_{k=1}^{T}6k(T-k) = \sum\limits_{k=1}^{T}6k(T-k)+1=P_1(T,T),
+\end{equation}
+see (\hyperref[f1]{1.1}) for $P_1(T,T)$.
+The corresponding coefficients $A_{m,j}, \ 0\leq m \leq 1$ in the (\hyperref[cubbe]{2.8}) are: $A_{1,0}=1, \ A_{1,1}=6$.
+Although, the expression (\hyperref[cubbe]{2.8}) is derived, essentially, from identity in finite differences of cubes, the finite differences $\Delta T^3(k)\neq6k(T-k)+1$ and $\nabla T^3(k)\neq6k(T-k)+1$. Over the manuscript we review the $P_m(\ell, T)$ in sense of backward difference $\nabla T^{2m+1}, \ m\in\mathbb{N}_1$, i.e we use the summation limits over $k$ as $1\leq k\leq \ell$ in (\hyperref[f1]{1.1}). To show that symmetry (\hyperref[symmetry_2]{1.4}) holds for (\hyperref[cubbe]{2.8}), let's construct a triangular array filled by the values of $g_1(T,k)=6k(T-k)+1$, where $T$ is row and $k$ shows the $k$-th term of the $T-$th row, see (\hyperref[symmetry_1]{1.3}) for definition of $g_m(T,k)$
+\begin{table}[H]
+\centering
+\begin{tabular}{lrrrrrrrrrrr}
+$T=0$&  &    &    &    &    &  1 &    &    &    &    &   \\\noalign{\smallskip\smallskip}
+$T=1$&  &    &    &    &  1 &    &  1 &    &    &    &   \\\noalign{\smallskip\smallskip}
+$T=2$&  &    &    &  1 &    &  7 &    &  1 &    &    &   \\\noalign{\smallskip\smallskip}
+$T=3$&  &    &  1 &    &  13 &    &  13 &    &  1 &    &   \\\noalign{\smallskip\smallskip}
+$T=4$&  &  1 &    &  19 &    &  25 &    &  19 &    &  1 &   \\\noalign{\smallskip\smallskip}
+$T=5$&1 &    &  25 &    & 37 &    & 37 &    &  25 &    & 1 \\\noalign{\smallskip\smallskip}
+\end{tabular}
+\caption{Triangle generated by $g_1(T,k)=6k(T-k)+1, \ 0\leq T\leq5, \ 0\leq k\leq T$,
+sequence \urlNewWindow{https://oeis.org/A287326} in OEIS, \cite{3}.} \label{fig_1}
+\end{table}
+The sum of the $T$-th row terms of \hyperref[fig_1]{Table (1)} starting from $k=1$ gives the partial case $P_1(T,T)=T^3$ of (\hyperref[f1]{1.1}). Binomial distribution of the row terms of \hyperref[fig_1]{Table (1)} can be easily proven by reviewing of its generating function $g_1(T,k)=\sum_{j=0}^1 A_{1,j}k^j(T-k)^j=6k(T-k)+1=6kT-6k^2+1$, which is parabolic for every given $T=const\in\mathbb{N}$, and, therefore, is symmetrical over $\tfrac{T}{2}$. Below we show a few properties of the $g_1(T,k)$
+\begin{enumerate}
+  \item Finite difference property, $\Delta(T^3)=g_1\left(\frac{T^2+T+2}{2}, 1\right)$, where $\frac{T^2+T+2}{2}$ is the $T$-th Central polygonal number, see \cite{29}.
+  \item Binomial transform of the second order of $g_1(T,k)$: $g_1(T+1,k)=2g_1(T,k)-g_1(T-1,k)$.
+  \item Symmetry, $g_1(T,k)=g_1(T, T-k), \ 0\leq k\leq T$.
+  \item The sum $\sum_k g_1(k,1)$ gives octagonal numbers, or so-called, star numbers, \urlNewWindow{https://oeis.org/A000567}.
+\end{enumerate}
+Below we show initial ten polynomials $P_m(\ell,T)=\sum_{k=0}^{m}(-1)^{m-k}U_m(\ell,k)\cdot T^k$ for $m=1$:
+\begin{equation}\label{u_1}
+\begin{split}
+P_1(\ell, T) &= \sum_{k=1}^{\ell}\sum_{j=0}^1 A_{1,j}k^j(T-k)^j =
+\sum_{k=1}^{\ell}6k(T-k)+1=\sum_{k=0}^{1}(-1)^{1-k}U_1(\ell,k)\cdot T^k \\
+&=-3 \ell^2 - 2 \ell^3 + 3 \ell T + 3 \ell^2 T\\
+&=\begin{cases}
+\ell=1 : -5 + 6 T &= -U_1(1,0)\cdot T^0+U_1(1,1)\cdot T^1=P_1(1,T)\\
+\ell=2 : -28 + 18 T &= -U_1(2,0)\cdot T^0+U_1(2,1)\cdot T^1=P_1(2,T)\\
+\ell=3 : -81 + 36 T &= -U_1(3,0)\cdot T^0+U_1(3,1)\cdot T^1=P_1(3,T)\\
+\ell=4 : -176 + 60 T &= -U_1(4,0)\cdot T^0+U_1(4,1)\cdot T^1=P_1(4,T)\\
+\ell=5 : -325 + 90 T &= -U_1(5,0)\cdot T^0+U_1(5,1)\cdot T^1=P_1(5,T)\\
+\ell=6 : -540 + 126 T &= -U_1(6,0)\cdot T^0+U_1(6,1)\cdot T^1=P_1(6,T)\\
+\ell=7 : -833 + 168 T &= -U_1(7,0)\cdot T^0+U_1(7,1)\cdot T^1=P_1(7,T)\\
+\ell=8 : -1216 + 216 T &= -U_1(8,0)\cdot T^0+U_1(8,1)\cdot T^1=P_1(8,T)\\
+\ell=9 : -1701 + 270 T &= -U_1(9,0)\cdot T^0+U_1(9,1)\cdot T^1=P_1(9,T)\\
+\ell=10: -2300 + 330 T &= -U_1(10,0)\cdot T^0+U_1(10,1)\cdot T^1=P_1(10,T)
+\end{cases}\\
+&=T^3 \ \mathrm{as} \ \ell = T\in\mathbb{N}.
+\end{split}
+\end{equation}
+The coefficients $U_1(\ell,k), \ 0\leq k\leq 1$ in (\hyperref[u_1]{2.9}) are terms of the sequence \urlNewWindow{https://oeis.org/A320047}, \cite{28}. The following figure shows graphically the intersections of the binomials (\hyperref[u_1]{2.9}) with monomial $T^3$ for $\ell\leq3$:
+\begin{figure}[H]
+\centering
+\includegraphics[width=400px, keepaspectratio]{figure_n_3.eps}
+\captionof{figure}{Intersections of binomials $P_1(\ell_1=1,T), \ P_1(\ell_2=2,T), \ P_1(\ell_3=3,T)$ and monomial $T^3$ in points $\ell_1=1, \ \ell_2=2, \ \ell_3=3$ according to the identity (\hyperref[main_identity]{1.2}).}
+\end{figure}
+\subsection{Example for \texorpdfstring{$m=2$}{m=2}}
+Consider the case $m=2$ in polynomial (\hyperref[f1]{1.1}), we have $P_2(\ell,T)=\sum_{k=1}^{\ell}\sum_{j=0}^2 A_{2,j}k^j(T-k)^j=T^5$, as $\ell=T\in\mathbb{N}$. Now, we have to determine the coefficients $A_{2,0}, \ A_{2,1}, \ A_{2,2}$ in the polynomial $P_2(\ell,T)$. We rewrite the polynomial $P_2(\ell,T)$ in extended view as follows
+\begin{equation}\label{alb_3_1}
+\begin{split}
+&\sum_{k=1}^{\ell}\sum_{j=0}^2 A_{2,j}k^j(T-k)^j\\
+=A_{2,2}&\left(\sum\limits_{1\leq k \leq \ell}k^2(T-k)^2\right)+A_{2,1}\left(\sum\limits_{1\leq k \leq \ell}k^1(T-k)^1\right)+A_{2,0}\left(\sum\limits_{1\leq k \leq \ell}1\right)\\
+=A_{2,2}&\left(\sum\limits_{1\leq k \leq \ell} k^2(T^2-2Tk+k^2)\right)+A_{2,1}\left(\sum\limits_{1\leq k \leq \ell} kT-k^2\right) + A_{2,0}\left(\sum\limits_{1\leq k \leq \ell}1\right)\\
+=A_{2,2}&\left(\sum\limits_{1\leq k \leq \ell} k^2T^2-2Tk^3+k^4\right)+A_{2,1}\left(\sum\limits_{1\leq k \leq \ell} kT-k^2\right) + A_{2,0}\left(\sum\limits_{1\leq k \leq \ell}1\right) \\
+=A_{2,2}&T^2\left(\sum\limits_{1\leq k \leq \ell}k^2\right)-2A_{2,2}T\left(\sum\limits_{1\leq k \leq \ell}k^3\right)+A_{2,2}\left(\sum\limits_{1\leq k \leq \ell}k^4\right)+A_{2,1}T\left(\sum\limits_{1\leq k \leq \ell} k\right) \\
+-A_{2,1}&\left(\sum\limits_{1\leq k \leq \ell}k^2\right)+A_{2,0}\left(\sum\limits_{1\leq k \leq \ell}1\right)=T^5, \ \mathrm{as} \ \ell=T\in\mathbb{N}.
+\end{split}
+\end{equation}
+By Binomial Theorem and Faulhaber's formula the expression (\hyperref[alb_3_1]{2.10}) can be found for every $m\in\mathbb{N}$ and $\ell=T\in\mathbb{N}$ as follows
+\begin{equation*}
+\begin{split}
+T^{2m+1}
+&=\sum_{j=0}^{m}\sum_{s=0}^{j}\sum_{k=1}^{T}(-1)^s \binom{j}{s} A_{m,j} k^{j+s} T^{j-s}=\sum_{j=0}^{m}\sum_{s=0}^{j} T^{j-s}(-1)^s \binom{j}{s} A_{m,j}\left(\sum_{k=1}^{T} k^{j+s}\right)\\
+&=\sum_{j=0}^{m}\sum_{s=0}^{j} T^{j-s}(-1)^s \binom{j}{s} A_{m,j}\left[\sum_{r=0}^{j+s}\frac{(-1)^r}{j+s+1}\binom{j+s+1}{j}B_{j}T^{j+s+1-r}\right]\\
+&=\sum_{j=0}^{m}\sum_{s=0}^{j}\sum_{r=0}^{j+s}\binom{j}{s} A_{m,j}\frac{(-1)^{r+s}}{j+s+1}\binom{j+s+1}{j}B_{j}T^{2j+1-r}\\
+&=\sum_{j=0}^{m}\sum_{s=0}^{j}\binom{j}{s} A_{m,j}\frac{(-1)^s}{(j+s+1)(T+1)}\binom{j+s+1}{j}B_{j}[(-1)^{j+2s}T^{j-s+1}+T^{2j+1}]\\
+&=\sum_{j=0}^{m}\sum_{s=0}^{j}\binom{j}{s} A_{m,j}\frac{(-1)^s}{(j+s+1)(T+1)}\binom{j+s+1}{j}B_{j}(-1)^{j+2s}T^{j-s+1}\\
+&+\sum_{j=0}^{m}\sum_{s=0}^{j}\binom{j}{s} A_{m,j}\frac{(-1)^s}{(j+s+1)(T+1)}\binom{j+s+1}{j}B_{j}T^{2j+1}
+\end{split}
+\end{equation*}
+Note that the part $A_{2,0}\sum\nolimits_{1\leq k \leq \ell}k^0(T-k)^0$ of (\hyperref[alb_3_1]{2.10}) gives an indeterminate form for $k=T$ as the $A_{2,0}(T-T)^0k^0$ contains the term $(T-T)^0=0^0$. Some textbooks leave the quantity $0^0$ undefined, because the functions $x^0$ and $0^x$ have different limiting values when $x$ decreases to $0$. For our purposes we will use the convention:
+$$\forall x: \ x^0 = 1,$$
+as it is a common agreement, see \cite{16}.
+By the Faulhaber's formula, the sums of successive powers in (\hyperref[alb_3_1]{2.10}) are following
+\begin{equation}\label{alb_3_1_1}
+\begin{split}
+&\sum\limits_{1\leq k \leq \ell} k = \frac{\ell^2+\ell}{2}, \\
+&\sum\limits_{1\leq k \leq \ell} k^2 = \frac{2\ell^3+3\ell^2+\ell}{6}, \\
+&\sum\limits_{1\leq k \leq \ell} k^3 = \frac{\ell^4+2\ell^3+\ell^2}{4}, \\
+&\sum\limits_{1\leq k \leq \ell} k^4 = \frac{6\ell^5+15\ell^4+10\ell^3-\ell}{30}.
+\end{split}
+\end{equation}
+Next, we substitute the identities (\hyperref[alb_3_1_1]{2.11}), into (\hyperref[alb_3_1]{2.10}) respectively
+\begin{equation}\label{alb_3_1_2}
+\begin{split}
+A_{2,2}T^2\left(\frac{2\ell^3+3\ell^2+\ell}{6}\right)
+-&2A_{2,2}T\left(\frac{\ell^4+2\ell^3+\ell^2}{4}\right)+A_{2,2}\left(\frac{6\ell^5+15\ell^4+10\ell^3-\ell}{30}\right)\\
++&A_{2,1}T\left(\frac{\ell^2+\ell}{2}\right)-A_{2,1}\left(\frac{2\ell^3+3\ell^2+\ell}{6}\right)+A_{2,0}\ell.
+\end{split}
+\end{equation}
+Factorising the expression (\hyperref[alb_3_1_2]{2.12}) and rewriting it under common divisor with set $\ell=T\in\mathbb{N}$, we get
+\begin{equation}\label{alb_3}
+\frac{A_{2,2}T^5-A_{2,2}T+30A_{2,0}}{30}+A_{2,1}\frac{T^3-T}{6}=T^5.
+\end{equation}
+In order to satisfy (\hyperref[alb_3]{2.13}) for every $T\in\mathbb{N}$, the coefficients $A_{2,0}, \ A_{2,1}, \ A_{2,2}$ should be a solutions to the following system of equations
+\begin{equation}\label{alb_5}
+\begin{cases}
+\frac{1}{30}A_{2,2} &=1, \\
+A_{2,1} &=1, \\
+30A_{2,0}-A_{2,2}&=0.
+\end{cases}
+\end{equation}
+The solutions to the system (\hyperref[alb_5]{2.14}) are following: $A_{2,2}=30, \ A_{2,1}=0, \ A_{2,0}=1$. Therefore, the polynomial $g_2(T,k)=\sum_{j=0}^2 A_{2,j}k^j(T-k)^j$ takes the form
+\begin{equation}\label{alb_6}
+g_2(T,k)=\sum_{j=0}^2 A_{2,j}k^j(T-k)^j=30k^2(T-k)^2+1.
+\end{equation}
+Let be $\ell=T\in\mathbb{N}$, therefore
+\begin{equation}
+T^5=\sum_{k=1}^{T}30k^2(T-k)^2+1=P_2(T,T),
+\end{equation}
+see (\hyperref[f1]{1.1}) for $P_2(T,T)$. To show that symmetry (\hyperref[symmetry_2]{1.4}) holds for (\hyperref[alb_6]{2.15}), let's construct a triangular array filled by the values of $g_2(T,k)=30k^2(T-k)^2+1$, where $T\geq 0, \ T\in\mathbb{N}$ is row and $k$ shows the $k$-th term of the $T-$th row, see (\hyperref[symmetry_1]{1.3}) for definition of $g_m(T,k)$
+\begin{table}[H]
+\begin{tabular}{rccccccccccc}
+$T=0$&  &    &    &    &    &  1 &    &    &    &    &   \\\noalign{\smallskip\smallskip}
+$T=1$&  &    &    &    &  1 &    &  1 &    &    &    &   \\\noalign{\smallskip\smallskip}
+$T=2$&  &    &    &  1 &    &  31 &    &  1 &    &    &   \\\noalign{\smallskip\smallskip}
+$T=3$&  &    &  1 &    &  121 &    &  121 &    &  1 &    &   \\\noalign{\smallskip\smallskip}
+$T=4$&  &  1 &    &  271 &    &  481 &    &  271 &    &  1 &   \\\noalign{\smallskip\smallskip}
+$T=5$&1 &    &  481 &    & 1081 &    & 1081 &    &  481 &    & 1 \\\noalign{\smallskip\smallskip}
+\end{tabular}
+\caption{Triangle generated by $g_2(T,k)=30k^2(T-k)^2+1, \ 0\leq T \leq 5, \ 0\leq k \leq T$,
+sequence \urlNewWindow{https://oeis.org/A300656} in OEIS, \cite{8}.} \label{fig_2}
+\end{table}
+The sum of the $T$-th row terms of \hyperref[fig_2]{Table (2)} starting from $k=1$ gives the partial case $P_2(T,T)=T^5$ of (\hyperref[f1]{1.1}). Below we show initial ten polynomials $P_m(\ell,T)=\sum_{k=0}^{m}(-1)^{m-k}U_m(\ell,k)\cdot T^k$, for $m=2$:
+\begin{small}
+\begin{equation}\label{u_2}
+\begin{split}
+&P_2(\ell, T)=\sum_{k=1}^{\ell}\sum_{j=0}^2 A_{2,j}k^j(T-k)^j=\sum\limits_{k=1}^{\ell}30k^2(T-k)^2+1=
+\sum_{k=0}^{2}(-1)^{2-k}U_2(\ell,k)\cdot T^k \\
+&=10 \ell^3 + 15 \ell^4 + 6 \ell^5 - 15 \ell^2 T - 30 \ell^3 T - 15 \ell^4 T + 5 \ell T^2 +
+ 15 \ell^2 T^2 + 10 \ell^3 T^2\\
+&=\begin{cases}
+\ell=1: 31 - 60 T + 30 T^2 &=U_2(1,0)\cdot T^0-U_2(1,1)\cdot T^1+U_2(1,2)\cdot T^2=P_2(1,T) \\
+\ell=2: 512 - 540 T + 150 T^2 &=U_2(2,0)\cdot T^0-U_2(2,1)\cdot T^1+U_2(2,2)\cdot T^2=P_2(2,T)\\
+\ell=3: 2943 - 2160 T + 420 T^2 &=U_2(3,0)\cdot T^0-U_2(3,1)\cdot T^1+U_2(3,2)\cdot T^2=P_2(3,T)\\
+\ell=4: 10624 - 6000 T + 900 T^2 &=U_2(4,0)\cdot T^0-U_2(4,1)\cdot T^1+U_2(4,2)\cdot T^2=P_2(4,T)\\
+\ell=5: 29375 - 13500 T + 1650 T^2 &=U_2(5,0)\cdot T^0-U_2(5,1)\cdot T^1+U_2(5,2)\cdot T^2=P_2(5,T)\\
+\ell=6: 68256 - 26460 T + 2730 T^2 &=U_2(6,0)\cdot T^0-U_2(6,1)\cdot T^1+U_2(6,2)\cdot T^2=P_2(6,T)\\
+\ell=7: 140287 - 47040 T + 4200 T^2 &=U_2(7,0)\cdot T^0-U_2(7,1)\cdot T^1+U_2(7,2)\cdot T^2=P_2(7,T)\\
+\ell=8: 263168 - 77760 T + 6120 T^2 &=U_2(8,0)\cdot T^0-U_2(8,1)\cdot T^1+U_2(8,2)\cdot T^2=P_2(8,T)\\
+\ell=9: 459999 - 121500 T + 8550 T^2 &=U_2(9,0)\cdot T^0-U_2(9,1)\cdot T^1+U_2(9,2)\cdot T^2=P_2(9,T)\\
+\ell=10: 760000 - 181500 T + 11550 T^2 &=U_2(10,0)\cdot T^0-U_2(10,1)\cdot T^1+U_2(10,2)\cdot T^2=P_2(10,T)\\
+\end{cases}\\
+&=T^5 \ \mathrm{as} \ \ell = T\in\mathbb{N}.
+\end{split}
+\end{equation}
+\end{small}
+The coefficients $U_2(\ell,k), \ 0\leq k\leq 2$ in (\hyperref[u_2]{2.17}) are terms of the sequence \urlNewWindow{https://oeis.org/A316349}, \cite{17}. The following figure shows graphically the intersections of the polynomials (\hyperref[u_2]{2.17}) with monomial $T^5$ for $\ell\leq3$:
+\begin{figure}[H]
+\centering
+\includegraphics[width=400px, keepaspectratio]{figure_n_5.eps}
+\captionof{figure}{Intersections of polynomials $P_2(\ell_1=1,T), \ P_2(\ell_2=2,T), \ P_2(\ell_3=3,T)$ and monomial $T^5$ in points $\ell_1=1, \ \ell_2=2, \ \ell_3=3$ according to the identity (\hyperref[main_identity]{1.2}).}
+\end{figure}
+\subsection{Example for \texorpdfstring{$m=3$}{m=3}}
+Consider the polynomial $P_3(\ell,T)=\sum_{k=1}^{\ell}\sum_{j=0}^3 A_{3,j}k^j(T-k)^j$.
+The coefficients $A_{3,0}, \ A_{3,1}, \ A_{3,2}, \ A_{3,3}$ in $P_3(\ell,T)$ are following: $A_{3,0}=1, \ A_{3,1}=0, \ A_{3,2}=-14, \ A_{3,3}=140$. Thus, $g_3(T,k)$ is
+\begin{equation}\label{7th_pow_generating_function}
+g_3(T,k)=\sum_{j=0}^3 A_{3,j}k^j(T-k)^j=140k^3(T-k)^3-14k^2(T-k)^2+1.
+\end{equation}
+Let be $\ell=T\in\mathbb{N}$, therefore
+\begin{equation}\label{seventh_power_identity}
+T^7=\sum_{k=1}^{T} 140k^3(T-k)^3-14k^2(T-k)^2+1=P_3(T,T),
+\end{equation}
+see (\hyperref[f1]{1.1}) for $P_3(T,T)$. To show that symmetry (\hyperref[symmetry_2]{1.4}) holds for (\hyperref[7th_pow_generating_function]{2.17}), let's construct a triangular array filled by the values of $g_3(T,k)$, where $T$ is row and $k$ shows the $k$-th term of the $T-$th row, see (\hyperref[symmetry_1]{1.3}) for definition of $g_m(T,k)$
+
+\begin{table}[H]
+\begin{tabular}{rccccccccccc}
+$T=0$&  &    &    &    &    &  1 &    &    &    &    &   \\\noalign{\smallskip\smallskip}
+$T=1$&  &    &    &    &  1 &    &  1 &    &    &    &   \\\noalign{\smallskip\smallskip}
+$T=2$&  &    &    &  1 &    &  127 &    &  1 &    &    &   \\\noalign{\smallskip\smallskip}
+$T=3$&  &    &  1 &    &  1093 &    &  1093 &    &  1 &    &   \\\noalign{\smallskip\smallskip}
+$T=4$&  &  1 &    &  3793 &    &  8905 &    &  3793 &    &  1 &   \\\noalign{\smallskip\smallskip}
+$T=5$&1 &    &  8905 &    & 30157 &    & 30157 &    &  8905 &    & 1 \\\noalign{\smallskip\smallskip}
+\end{tabular}
+\caption{Triangle generated by $g_3(T,k)=140k^3(T-k)^3-14k^2(T-k)^2+1, \ 0\leq T\leq 5, \ 0\leq k \leq T$,
+sequence \urlNewWindow{https://oeis.org/A300785} in OEIS, \cite{9}.} \label{fig_3}
+\end{table}
+The sum of the $T$-th row terms of \hyperref[fig_3]{Table (3)} starting from $k=1$ gives the partial case $P_3(T,T)=T^7$ of (\hyperref[f1]{1.1}).
+Below we show initial ten polynomials $P_m(\ell,T)=\sum_{k=0}^{m}(-1)^{m-k}U_m(\ell,k)\cdot T^k$, for $m=3$:
+\begin{small}
+\begin{equation}\label{u_3}
+\begin{split}
+P_3(\ell,T)
+&=\sum_{k=1}^{\ell}\sum_{j=0}^3 A_{3,j}k^j(T-k)^j=\sum\limits_{1\leq k \leq \ell}140k^3(T-k)^3-14k^2(T-k)^2+1=\sum_{k=0}^{3}(-1)^{3-k}U_3(\ell,k)\cdot T^k\\
+&=7 \ell^2 + 28 \ell^3 - 70 \ell^5 - 70 \ell^6 - 20 \ell^7 - 7 \ell T - 42 \ell^2 T +
+ 175 \ell^4 T + 210 \ell^5 T + 70 \ell^6 T + 14 \ell T^2 - 140 \ell^3 T^2 \\
+&-210 \ell^4 T^2 - 84 \ell^5 T^2 + 35 \ell^2 T^3 + 70 \ell^3 T^3 + 35 \ell^4 T^3 \\
+&=\begin{cases}
+\ell=1 :&  -125 + 406 T - 420 T^2 + 140 T^3=P_3(1,T)\\
+\ell=2 :&  -9028 + 13818 T - 7140 T^2 + 1260 T^3=P_3(2,T)\\
+\ell=3 :&  -110961 + 115836 T - 41160 T^2 + 5040 T^3=P_3(3,T)\\
+\ell=4 :&  -684176 + 545860 T - 148680 T^2 + 14000 T^3=P_3(4,T)\\
+\ell=5 :&  -2871325 + 1858290 T - 411180 T^2 + 31500 T^3=P_3(5,T)\\
+\ell=6 :&  -9402660 + 5124126 T - 955500 T^2 + 61740 T^3=P_3(6,T)\\
+\ell=7 :&  -25872833 + 12182968 T - 1963920 T^2 + 109760 T^3=P_3(7,T)\\
+\ell=8 :&  -62572096 + 25945416 T - 3684240 T^2 + 181440 T^3=P_3(8,T)\\
+\ell=9 :&  -136972701 + 50745870 T - 6439860 T^2 + 283500 T^3=P_3(9,T)\\
+\ell=10 :& -276971300 + 92745730 T - 10639860 T^2 + 423500 T^3=P_3(10,T)
+\end{cases} \\
+&=T^7 \ \mathrm{as} \ \ell = T\in\mathbb{N}.
+\end{split}
+\end{equation}
+\end{small}
+
+The coefficients $U_3(T,k), \ 0\leq k\leq 3$ in (\hyperref[u_3]{2.20}) are terms of the sequence \urlNewWindow{https://oeis.org/A316387}, \cite{18}. The following figure shows graphically the intersections of the polynomials (\hyperref[u_3]{2.20}) with monomial $T^7$ for $\ell\leq3$:
+\begin{figure}[H]
+\centering
+\includegraphics[width=450px, keepaspectratio]{figure_n_7.eps}
+\captionof{figure}{Intersections of polynomials $P_3(\ell_1=1,T), \ P_3(\ell_2=2,T), \ P_3(\ell_3=3,T), \ P_3(\ell_4=4,T)$ and monomial $T^7$ in points $\ell_1=1, \ \ell_2=2, \ \ell_3=3, \ \ell_4=4$ according to the identity (\hyperref[main_identity]{1.2}).}
+\end{figure}
+Reviewing the \hyperref[fig_1]{Table (1)}, \hyperref[fig_2]{Table (2)}, \hyperref[fig_3]{Table (3)} we can observe the following relation between $g_m(n,k)$ and Pascal's identity, \cite{30}
+\begin{ppty} (Relation between $g_m(n,k)$ and Pascal's identity.)
+\begin{equation*}
+\begin{split}
+(n+1)^{2m+1}-1
+&=\sum_{s=1}^{n}[(s+1)^{2m+1}-s^{2m+1}]=\sum_{p=0}^{2m}\binom{k+1}{p}(1^p+2^p+\cdots+n^p)\\
+&=\sum_{k=1}^{n-1}g_m(n,k),
+\end{split}
+\end{equation*}
+\end{ppty}
+see (\hyperref[symmetry_1]{1.3}) for definition of $g_m(T,k)$.
+\begin{ppty} (Linear recurrence of $g_m(T,k)$ be means of Binomial Transform.)
+Review the function $g_m(T,k)$, which is defined by $m$-order polynomial, see (\hyperref[symmetry_1]{1.3}). It's well known fact that the finite difference $\Delta^u P_m(n)$ of m-order polynomial $P_m(n)$ is equal to zero for $u\geq m+1$, see \cite{31}. Recall Binomial transform of sequence $a_n$. D.E. Knuth has introduced the binomial transform in \cite{32} as follows
+\begin{equation*}
+\widehat{a}_n = \sum_{k=0}^{n} \binom{n}{k} (-1)^k a_k.
+\end{equation*}
+In particular, $\widehat{a}_n=\Delta^n a_n$, therefore, for $g_m(T,k)$ we have
+\begin{equation*}
+\widehat{g_m(T,k)}_n = \sum_{s=0}^{n} (-1)^{s+1} \binom{n}{s} g_m(T+(n-1)-j,k) = 0, \ \mathrm{for} \ n\geq m+1,
+\end{equation*}
+Let be $n=m+1$, thus,
+\begin{equation*}
+\widehat{g_m(T,k)}_{m+1} = \sum_{s=0}^{n} (-1)^{s+1} \binom{m+1}{s} g_m(T+m-s,k) = 0,
+\end{equation*}
+therefore, it gives us opportunity to represent $g_m(T+m-r,k)$ recursively for every $0 \leq r\leq m$ as follows
+\begin{equation*}
+(-1)^{r+1} \binom{m+1}{r} g_m(T+m-r,k)=\sum_{s\in\mathbb{N}_0/\{r\}} (-1)^{s+1} \binom{m+1}{s} g_m(T+m-s,k).
+\end{equation*}
+In particular,
+\begin{equation*}
+g_m(T+n,k) = \sum_{s=1}^{n} (-1)^{s+1} \binom{n}{s} g_m(T+(n-1)-j,k), \ n\geq m+1.
+\end{equation*}
+\end{ppty}
+\begin{ppty} (Property of polynomial $P_m(\ell,T)$.)
+For every $\ell=T+1$ in $P_m(\ell,T)$ holds
+\begin{equation*}
+P_m(T+1,T)=T^{2m+1}-1.
+\end{equation*}
+\end{ppty}
+\subsection{Derivation of coefficients \texorpdfstring{$A_{m,j}$}{A(m,j)}}
+To reach a recurrent formula of $A_{m,j}, \ m\geq0$, first let's fix the unused values of $A_{m,j}=0, \ \mathrm{for} \ j<0 \ \mathrm{or} \ j>m$, so we don't need to consider the summation range for $j$. By the symmetry (\hyperref[symmetry_2]{1.4}) we can rewrite (\hyperref[f1]{1.1}) as follows
+\begin{equation}\label{gen_5_2}
+P_m(\ell,T)=\sum_{k=0}^{\ell-1}\sum_{j=0}^m A_{m,j}k^j(T-k)^j
+\end{equation}
+By expanding $(T-k)^j$ in r.h.s of (\hyperref[gen_5_2]{2.21}) and using Faulhaber's formula \cite{11}, the result is
+
+\begin{equation}\label{gen_5}
+\begin{split}
+&\sum_{k=0}^{\ell-1} (T-k)^j k^j =\sum_{k=0}^{\ell-1} \sum_{i} \binom{j}i T^{j-i} (-1)^i k^{i+j}\\
+&=\sum_{i} \binom{j}{i} T^{j-i} \frac{(-1)^i}{i+j+1} \left[ \sum_{t} \binom{i+j+1}t B_t \ell^{i+j+1-t} - B_{i+j+1}\right] \\
+&=\underbrace{\sum_{i,t}\binom{j}{i} \frac{(-1)^i}{i+j+1} \binom{i+j+1}t B_tT^{j-i}\ell^{i+j+1-t}}_{(\star)}
+- \underbrace{\sum_{i} \binom{j}{i}  \frac{(-1)^i}{i+j+1} B_{i+j+1} T^{j-i}}_{(\diamond)}
+\end{split}
+\end{equation}
+where $B_t$ are Bernoulli numbers \cite{14}. Now, we notice that
+\begin{equation}\label{gen_6}
+\sum_{i} \binom{j}{i} \frac{(-1)^i}{i+j+1} \binom{i+j+1}t
+=\begin{cases}
+\frac{1}{(2j+1)\binom{2j}j}, & \text{if } t=0;\\
+\frac{(-1)^j}{t}\binom{j}{2j-t+1}, & \text{if } t>0.
+\end{cases}
+\end{equation}
+In particular, the last sum is zero for $0<t\leq j$. Now, by substituting to the $(\star)$ part of
+(\hyperref[gen_5]{2.22}) the result of (\hyperref[gen_6]{2.23}), we have
+\begin{equation}\label{gen_6_1_2}
+\begin{split}
+\sum_{i,t}\binom{j}{i} \frac{(-1)^i}{i+j+1} \binom{i+j+1}{t} B_tT^{j-i}\ell^{i+j+1-t}
+&= \frac{1}{(2j+1)\binom{2j}j}T^{j}\ell^{j+1}\\
+&+\sum_{t>0} \frac{(-1)^j}{t}\binom{j}{2j-t+1} B_t T^{j-i}\ell^{i+j+1-t}
+\end{split}
+\end{equation}
+By means of (\hyperref[gen_6_1_2]{2.24}), expression (\hyperref[gen_5]{2.22}) takes the form
+\begin{equation}\label{gen_6_1}
+\begin{split}
+\sum_{k=0}^{\ell-1} (T-k)^j k^j
+&=\underbrace{\frac{1}{(2j+1)\binom{2j}j}T^{j}\ell^{j+1}+\sum_{t>0}\frac{(-1)^j}{t}\binom{j}{2j-t+1} B_t T^{j-i}\ell^{i+j+1-t}}_{(\star)} \\
+&- \underbrace{\sum_{i} \binom{j}{i}  \frac{(-1)^i}{i+j+1} B_{i+j+1} T^{j-i}}_{(\diamond)}
+\end{split}
+\end{equation}
+We have to remember that if the sum over some variable $i$ contains $\binom{j}{i}$, then instead of limiting its summation range to $i\in[0, \ j]$, we can let $i\in[-\infty, \ +\infty]$ since $\binom{j}{i} = 0$ for $i$ outside the range $i\in[0, \ j]$ (i.e., when $i<0$ or $i>j$). It's much easier to review such sum as sum from $-\infty$ to $+\infty$ (unless specified otherwise), where only a finite number of terms are nonzero, this fact is also discussed in \cite{12}. Therefore, we haven't shown detailed bounds of summation in above derivation.
+Now, we keep our attention on (\hyperref[gen_6_1]{2.25}).
+To combine or cancel identical terms across the two sums in (\hyperref[gen_6_1]{2.25}) more easily, let introduce $\kappa=2j+1-t$ to $(\star)$ and $\kappa=j-i$ to $(\diamond)$, respectively
+\begin{equation}\label{gen_7}
+\begin{split}
+\sum_{k=0}^{\ell-1} (T-k)^j k^j
+&=\frac{1}{(2j+1)\binom{2j}j} T^{j}\ell^{j+1}
++\sum_{\kappa} \frac{(-1)^j}{2j+1-\kappa}\binom{j}{\kappa}B_{2j+1-\kappa}T^{j-i}\ell^{\kappa+i-j} \\
+&-\sum_{\kappa} \binom{j}{\kappa} \frac{(-1)^{j-\kappa}}{2j+1-\kappa} B_{2j+1-\kappa}T^{\kappa}
+\end{split}
+\end{equation}
+Let be $\ell=T$ in (\hyperref[gen_7]{2.26}), thus
+\begin{equation}\label{gen_7_1}
+\begin{split}
+\sum_{k=0}^{T-1} (T-k)^j k^j
+&=\frac{1}{(2j+1)\binom{2j}j} T^{2j+1}
++\sum_{\kappa} \frac{(-1)^j}{2j+1-\kappa}\binom{j}{\kappa}B_{2j+1-\kappa}T^{\kappa} \\
+&-\sum_{\kappa} \binom{j}{\kappa} \frac{(-1)^{j-\kappa}}{2j+1-\kappa} B_{2j+1-\kappa}T^{\kappa}\\
+&=\frac{1}{(2j+1)\binom{2j}j} T^{2j+1} + 2\sum_{\text{odd }\kappa}
+\frac{(-1)^j}{2j+1-\kappa}\binom{j}{\kappa}B_{2j+1-\kappa}T^{\kappa}.
+\end{split}
+\end{equation}
+Now, using the definition of $A_{m,j}$,
+\begin{equation*}
+T^{2m+1}=\sum_{k=0}^{T-1}\sum_{j=0}^{m} A_{m,j}k^j(T-k)^j,
+\end{equation*}
+From (\hyperref[gen_7_1]{2.27}) we can obtain the following identity for polynomials in $T$
+\begin{equation}\label{gen_8}
+\begin{split}
+&\sum_{j}A_{m,j}\frac{1}{(2j+1)\binom{2j}j}T^{2j+1}
++ 2\sum_{j, \text{ odd }\kappa} A_{m,j} \binom{j}{\kappa} \frac{(-1)^j}{2j+1-\kappa} B_{2j+1-\kappa}T^{\kappa}\\
+&\equiv n^{2m+1}.
+\end{split}
+\end{equation}
+Taking the coefficient of $n^{2j+1}$ in the above expression, we get $A_{m,m} = (2m+1) \binom{2m}{m},$ and taking the
+coefficient of $x^{2d+1}$ for an integer $d$ in the range $m/2 \leq d < m$ we get $A_{m,d}=0$.
+Taking the coefficient of $n^{2d+1}$ in (\hyperref[gen_8]{2.28}) for $m/4 \leq d < m/2$ , we get
+\begin{equation*}\label{gen_10}
+A_{m,d} \frac{1}{(2d+1)\binom{2d}{d}} + 2 (2m+1) \binom{2m}{m} \binom{m}{2d+1} \frac{(-1)^m}{2m-2d} B_{2m-2d} = 0,
+\end{equation*}
+i.e
+\begin{equation*}\label{gen_11}
+A_{m,d} = (-1)^{m-1} \frac{(2m+1)!}{d!d!m!(m-2d-1)!}\frac{1}{m-d} B_{2m-2d}.
+\end{equation*}
+Continuing similarly, we can express $A_{m,j}$ for each integer $j$ in the range $m/2^{s+1}\leq j< m/2^s$ (iterating consecutively $s=1,2,...$) via the previously determined values of $A_{m,d}, \ d<j$ as follows
+\begin{equation*}\label{gen_12}
+A_{m,j} = (2j+1)\binom{2j}{j} \sum_{d=2j+1}^{m} A_{m,d} \binom{d}{2j+1} \frac{(-1)^{d-1}}{d-j} B_{2d-2j}.
+\end{equation*}
+The same formula holds also for $m=0$. Note that the $m$ in above sum must satisfy $m\geq2j+1$ to return a nonzero term $A_{m,j}$.
+\begin{defn}\label{gen_13}
+\textit{(Definition of $A_{m,j}$ coefficients)}
+\begin{equation*}
+A_{m,j}:=
+\begin{cases}
+0, & \mathrm{if } \ j<0 \ \mathrm{or } \ j>m, \\
+(2j+1)\binom{2j}{j} \sum_{d=2j+1}^{m} A_{m,d} \binom{d}{2j+1} \frac{(-1)^{d-1}}{d-j} B_{2d-2j}, & \mathrm{if } \ 0 \leq j < m, \\
+(2j+1)\binom{2j}{j}, & \mathrm{if } \ j=m. \\
+\end{cases}
+\end{equation*}
+\end{defn}
+Five initial rows of the triangle generated by $A_{m,j}, \ m\geq0, \ 0\leq j \leq m$ are
+
+\begin{table}[H]
+\begin{tabular}{rccccccccccc}
+$m=0$&  &    &    &    &    &  1 &    &    &    &    &   \\\noalign{\smallskip\smallskip}
+$m=1$&  &    &    &    &  1 &    &  6 &    &    &    &   \\\noalign{\smallskip\smallskip}
+$m=2$&  &    &    &  1 &    &  0 &    &  30 &    &    &   \\\noalign{\smallskip\smallskip}
+$m=3$&  &    &  1 &    &  -14 &    &  0 &    &  140 &    &   \\\noalign{\smallskip\smallskip}
+$m=4$&  &  1 &    &  -120 &    &  0 &    &  0 &    &  630 &   \\\noalign{\smallskip\smallskip}
+$m=5$&1 &    &  -1386 &    & 660 &    & 0 &    &  0 &    & 2772 \\\noalign{\smallskip\smallskip}
+\end{tabular}
+\caption{Triangle generated by $A_{m,j}, \ 0\leq j \leq m, \ m\geq0$, see definition (\hyperref[gen_13]{2.29}).} \label{fig_4}
+\end{table}
+
+Zeroes appear in \hyperref[fig_4]{Table (4)} for $m\geq2$, with respect to regularity:
+\begin{equation*}
+\begin{cases}
+A_{m,j} = 0, \ &\mathrm{if} \ j=k+\left\lfloor\frac{m-1}{2}\right\rfloor, \ 1\leq k\leq \left\lceil\frac{m-1}{2}\right\rceil,\\
+A_{m,j} \neq 0, \ &\mathrm{otherwise},
+\end{cases}
+\end{equation*}
+see \urlNewWindow{https://oeis.org/A138099}.
+
+Note that starting from row $m\geq11$ the terms of the \hyperref[fig_4]{Table (4)} consists the fractional numbers, for example, $A_{11,1}=800361655623.6$. One can find a complete list of the numerators and denominators of $A_{m,j}$ in OEIS under the identifiers  \urlNewWindow{https://oeis.org/A302971} and \urlNewWindow{https://oeis.org/A304042}, respectively, see \cite{17},\cite{18}. The terms $A_{m,m}$ are \urlNewWindow{https://oeis.org/A002457}. Below we show a few properties of coefficients $A_{m,j}$.
+\begin{ppty} (Summation of $A_{m,j}$.)
+\begin{equation*}
+\sum_{j=0}^{m} A_{m,j} \ = \ 2^{2m+1}-1.
+\end{equation*}
+\end{ppty}
+\begin{ppty} (Odd power identity be means of certain integrals.)
+\begin{equation}
+T^{2m+1}=\int\limits_{0}^{T}A_{m,m}k^m(T-k)^mdk=A_{m,m}\int\limits_{0}^{T}k^m(T-k)^mdk.
+\end{equation}
+\begin{proof}
+\begin{equation}
+\begin{split}
+T^{2m+1}
+&=\sum_{s=0}^{m}(-1)^s A_{m,m} \binom{m}{s} T^{m-s} \int\limits_{0}^{T}k^{m+s}dk\\
+&=\sum_{s=0}^{m}(-1)^s A_{m,m} \binom{m}{s} T^{m-s}\frac{T^{m+s+1}}{m+s+1}\\
+&=T^{2m+1}\sum_{s=0}^{m}\ddfrac{(-1)^s A_{m,m}}{m+s+1} \binom{m}{s}.
+\end{split}
+\end{equation}
+\end{proof}
+\end{ppty}
+It implies that
+\begin{equation*}
+\sum_{s=0}^{m}\ddfrac{(-1)^s A_{m,m}}{m+s+1} \binom{m}{s} = 1,
+\end{equation*}
+Therefore,
+\begin{equation*}
+A_{m,m} = \ddfrac{1}{\sum_{s=0}^{m}\frac{(-1)^s}{m+s+1}\binom{m}{s}}.
+\end{equation*}
+\subsection{Derivation of coefficients \texorpdfstring{$U_m(\ell,k)$}{Um(l,k)}}
+To find a recurrence for coefficients $U_m(\ell,k)$ for every $m\geq1$ let's express the polynomials (\hyperref[f1]{1.1}) in terms of $A_{m,j}$ and Bernoulli numbers. To do so, let's expand the binomial
+$(T-k)^j$ in the l.h.s. of (\hyperref[f1]{1.1}) and change of the order of summation:
+\begin{equation}\label{sum_2}
+\begin{split}
+\sum_{k=1}^{\ell}\sum_{j=0}^m A_{m,j}k^j(T-k)^j &= \sum_{k=1}^{\ell}\sum_{j=0}^m A_{m,j}k^j\sum_{t=0}^j(-1)^{j-t}\binom{j}{t}T^t k^{j-t}\\
+&=\sum_{t=0}^m T^t \sum_{k=1}^{\ell}\sum_{j=t}^m (-1)^{j-t}\binom{j}{t}A_{m,j}k^{2j-t}.
+\end{split}
+\end{equation}
+Now, taking the coefficient of $T^t$ in (\hyperref[sum_2]{2.30}) gives:
+\begin{equation*}
+U_m(\ell,t) = (-1)^m \sum_{k=1}^{\ell}\sum_{j=t}^m (-1)^j\binom{j}{t}A_{m,j}k^{2j-t}.
+\end{equation*}
+From this formula it may be not immediately clear why $U_m(\ell,t)$ represent polynomials in $\ell$. However, this can be seen if we change the summation order again and use Faulhaber's formula to obtain:
+\begin{equation}\label{maxal1}
+U_m(\ell,t) = (-1)^m \sum_{j=t}^m \binom{j}{t}A_{m,j} \frac{(-1)^j}{2j-t+1}\sum_{l=0}^{2j-t} \binom{2j-t+1}{l}B_{l}\ell^{2j-t+1-l}.
+\end{equation}
+Introducing $\kappa=2j-t+1-l$ to (\hyperref[maxal1]{2.31}) we further get the formula:
+\begin{equation*}
+U_m(\ell,t) = (-1)^m \sum_{\kappa=1}^{2m-t+1} \ell^\kappa \sum_{j=t}^m \binom{j}{t}A_{m,j} \frac{(-1)^j}{2j-t+1}\binom{2j-t+1}{\kappa}B_{2j-t+1-\kappa},
+\end{equation*}
+which allows easily compute the coefficient of $\ell^{\kappa}$ in $U_m(\ell,t)$ for each $\kappa$. In above formulae we assume that $B_1=+\frac12$.
+\section{Acknowledgements}
+We would like to thank to Dr. Max Alekseyev (Department of Mathematics and Computational Biology,
+George Washington University) for sufficient help in the derivation of $A_{m,j}$ coefficients,
+Dr. Hansruedi Widmer for his useful comments concerning the derivation of coefficients $A_{m,j}$,
+Dr. Ron Knott (Visiting Fellow, Dept. of Mathematics at University of Surrey) for his useful
+suggestions on the writing of this article, and to Mr. Albert Tkaczyk for his help in derivation
+of the cases $m=2$ and $m=3$.
+Also, we'd like to thank to OEIS editors Michel Marcus, Peter Luschny, Jon E. Schoenfield and others
+for their patient, faithful volunteer work and for useful comments and suggestions during
+the editing of sequences, concerned with this manuscript. We, also, greatly appreciate the
+preliminary proofread and suggestions by
+\urlNewWindow{http://www.cantab.net/users/bnr/}.
+\section{Conclusion}
+In this manuscript we have derived and discussed the polynomials $P_m(\ell,T)$, such that equal to the monomial $T^{2m+1}$ as $\ell=T\in\mathbb{N}$.
+\section{Supplementary Files}
+We provide the following supplementary files to support our study:
+\begin{itemize}
+  \item \urlNewWindow{https://kolosovpetro.github.io/arxiv_1603_02468/identity_1_1.txt} - Mathematica program, implementation the left-hand side of the identity (\hyperref[f1]{1.1}), that is $T^{2m+1}=\sum_{k=1}^{\ell}\sum_{j=0}^m A_{m,j}k^j(T-k)^j, \ \ell=T\in\mathbb{N}.$
+  \item \urlNewWindow{https://kolosovpetro.github.io/arxiv_1603_02468/identity_1_1_r_h_s.txt} - Mathematica program, implementation the right-hand side of the identity (\hyperref[f1]{1.1}), that is $T^{2m+1}=\sum_{k=0}^{m}(-1)^{m-k}U_m(\ell,k)\cdot T^k, \ \ell=T\in\mathbb{N}.$
+  \item \urlNewWindow{https://kolosovpetro.github.io/arxiv_1603_02468/u_coefficients_in_row.txt} - Mathematica program, that lists the coefficients $U_m(\ell,k)$ in (\hyperref[f1]{1.1}) for given $m$. (By default $m=2$)
+  \item \urlNewWindow{https://kolosovpetro.github.io/pdf/error_of_approximation.pdf} - pdf file, shows the error of approximation of the odd power $T^{2m+1}$ by (\hyperref[f1]{1.1}).
+\end{itemize}
+\begin{thebibliography}{9}
+\bibitem{1}
+        Donald E. Knuth., Johann Faulhaber and Sums of Powers, pp. 9-10., arXiv preprint,
+\urlNewWindow{https://arxiv.org/abs/math/9207222v1}, 1992.
+\bibitem{2}
+        John Riordan, Combinatorial Identities (New York: John Wiley \& Sons, 1968).
+\bibitem{3}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences \urlNewWindow{https://oeis.org/A287326}.
+\bibitem{4}
+        Weisstein, Eric W. "\href{http://mathworld.wolfram.com/FiniteDifference.html}{Finite Difference.}" From \href{http://mathworld.wolfram.com/}{Mathworld}.
+\bibitem{5}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A028896}.
+\bibitem{6}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A275709}.
+\bibitem{7}
+        Weisstein, Eric W. "\href{http://mathworld.wolfram.com/BernoulliNumber.html}{Bernoulli Number.}" From \href{http://mathworld.wolfram.com/}{Mathworld}--A Wolfram Web Resource.
+\bibitem{8}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A300656}.
+\bibitem{9}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A300785}.
+\bibitem{10}
+        Ronald Graham, Donald Knuth, and Oren Patashnik (1989-01-05). "Binomial coefficients". Concrete Mathematics (1st ed.). Addison Wesley Longman Publishing Co. p. 162. ISBN 0-201-14236-8, \href{https://smarturl.it/concrete_mathematics}{online copy}.
+\bibitem{11}
+         Johann Faulhaber, {\sl Academia Algebr{\ae}}, Darinnen die miraculosische Inventiones zuden h\"ochsten Cossen weiters {\it continuirt\/} und {\it profitiert\/} werden. Augspurg, bey Johann Ulrich Sch\"onigs, 1631.
+         (Call number {\tt QA154.8{\kern3pt}F3{\kern3pt}1631a{\kern3pt}f{\kern3pt}MATH} at Stanford University Libraries.),  \href{http://digital.slub-dresden.de/fileadmin/data/272635758/272635758_tif/jpegs/272635758.pdf}{online copy}.
+\bibitem{12}
+        Donald E. Knuth., Two notes on notation., pp. 1-2, arXiv preprint,
+        \urlNewWindow{https://arxiv.org/abs/math/9205211}, 1992.
+\bibitem{13}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A302971}.
+\bibitem{14}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A304042}.
+\bibitem{15}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A002457}.
+\bibitem{16}
+        Donald E. Knuth, The Art of Computer Programming Vol. 3, (1973) Addison-Wesley, Reading, MA.
+\bibitem{17}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A316349}.
+\bibitem{18}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A316387}.
+\bibitem{22}
+        John Riordan, Combinatorial Identities (New York: John Wiley \& Sons, 1968).
+\bibitem{27}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A303675}.
+\bibitem{28}
+        OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A320047}.
+\bibitem{29}
+         OEIS Foundation Inc. (2018), The On-Line Encyclopedia of Integer Sequences, \urlNewWindow{https://oeis.org/A000124}.
+\bibitem{30}
+        Kieren MacMillan, Jonathan Sondow. Proofs of power sum and binomial coefficient congruences via Pascal's identity, p. 2., arXiv preprint, \urlNewWindow{https://arxiv.org/abs/1011.0076}, 1992.
+\bibitem{31}
+        Bakhvalov N. S. Numerical Methods: Analysis, Algebra, Ordinary Differential Equations p. 59, 1977. (In russian)
+\bibitem{32}
+        Donald E. Knuth, The Art of Computer Programming Vol. 3, (1973) Addison-Wesley, Reading, MA.
+\end{thebibliography}
+\end{document}
